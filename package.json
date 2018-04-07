@@ -1,5 +1,5 @@
 {
-  "name": "@binary-facory/rate-limiter",
+  "name": "@jlmurphysa/rate-limiter",
   "version": "0.0.1",
   "main": "build/src/index.js",
   "typings": "build/src/index.d.ts",
@@ -41,10 +41,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/binary-factory/rate-limiter.git"
+    "url": "https://github.com/jlmurphysa/rate-limiter.git"
   },
   "bugs": {
-    "url": "https://github.com/binary-factory/rate-limiter/issues"
+    "url": "https://github.com/jlmurphysa/rate-limiter/issues"
   },
   "tags": [
     "rate",
