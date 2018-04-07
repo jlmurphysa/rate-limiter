@@ -1,7 +1,7 @@
 # rate-limiter
 [![Build Status](https://travis-ci.org/jlmurphysa/rate-limiter.svg?branch=master)](https://travis-ci.org/jlmurphysa/rate-limiter)
 [![Coverage Status](https://coveralls.io/repos/github/jlmurphysa/rate-limiter/badge.svg?branch=master)](https://coveralls.io/github/jlmurphysa/rate-limiter?branch=master)
-[![Standard Version](https://img.shields.io/npm/v/npm.svg)](https://img.shields.io/npm/v/npm.svg)
+[![Standard Version](https://img.shields.io/npm/v/@jlmurphysa/rate-limiter.svg)](https://img.shields.io/npm/v/npm.svg)
 
 A powerful rate-limiter with annotation and channel support written for TypeScript.
 
