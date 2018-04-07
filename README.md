@@ -1,79 +1,85 @@
 # rate-limiter
-[![Build Status](https://travis-ci.org/binary-factory/rate-limiter.svg?branch=master)](https://travis-ci.org/binary-factory/rate-limiter)
-[![Coverage Status](https://coveralls.io/repos/github/binary-factory/rate-limiter/badge.svg?branch=master)](https://coveralls.io/github/binary-factory/rate-limiter?branch=master)
-[![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
+[![Build Status](https://travis-ci.org/jlmurphysa/rate-limiter.svg?branch=master)](https://travis-ci.org/jlmurphysa/rate-limiter)
+[![Coverage Status](https://coveralls.io/repos/github/jlmurphysa/rate-limiter/badge.svg?branch=master)](https://coveralls.io/github/jlmurphysa/rate-limiter?branch=master)
+[![Standard Version](https://img.shields.io/npm/v/npm.svg)](https://img.shields.io/npm/v/npm.svg)
 
-A powerful rate-limiter with annotation and channel support written in TypeScript.
+A powerful rate-limiter with annotation and channel support written for TypeScript.
 
 ## Features
-* Annotation support with `@throttle()`
-* Implements the token-bucket-algorythm. Exported as `TokenBucket`
-* Support of idependent configurable `Channels` that are isolated from each other.
+* Annotation/decorator support with `@throttle`
+* Implements the token-bucket algorithm for flexible rate options.
+* Support for independent configurable `Channels` that are isolated from each other.
 
 ## Installation
-`npm install @binary-factory/rate-limiter`
+`$ npm install @jlmurphysa/rate-limiter`
 
 ## Usage
 
-### Simple with default channel
+### Simple default channel
 ```typescript
-import { throttle, Channels } from '@binary-factory/rate-limiter';
+import { throttle, Channels } from '@jlmurphysa/rate-limiter'
+
 class API {
     @throttle()
     static async request() {
         return 'OK';
     }
 }
-Channels.create(10, 'second');
+Channels.create(10, 'second')
 ```
 
-### Simple with named channels
+### Simple named channels
 ```typescript
-import { Channels, throttle } from '@binary-factory/rate-limiter';
+import { Channels, throttle } from '@jlmurphysa/rate-limiter'
+
 class API {
     @throttle('google-places')
     static async requestToPlaces() {
         return 'OK';
     }
-    
+
     @throttle('google-translate')
     static async requestToAnother() {
-        
+
     }
 }
-Channels.create('google-places', 10, 'second');
-Channels.create('google-translate', 20, 'hour');
+Channels.create('google-places', 10, 'second')
+Channels.create('google-translate', 20, 'hour')
 ```
 
 ### Advanced
 ```typescript
-import { Channel, Channels, throttle } from '@binary-factory/rate-limiter';
-class API {
-    
-    @throttle({
-        channel: 'google-places',
-        cost: 5,
-        ttl: 5000 // Drop whether we have to wait more than 5secs.
-    })
-    static async requestToPlaces() {
-        return 'OK';
-    }
-    
-    @throttle({
-        channel: 'google-places',
-        cost: 5,
-        ttl: 5000 // Drop whether we have to wait more than 5secs.
-    })
-    static async requestToPlacesRich() {
-        
-    }
+import {
+    Channel,
+    Channels,
+    throttle
+} from '@jlmurphysa/rate-limiter'
+
+Channels.add('google-places', new Channel({
+    interval: 1000,         // Token refresh interval
+    bucketSize: 25,         // Max tokens the bucket will hold
+    tokensPerInterval: 10,  // Number of tokens we receive per interval
+    tokens: 25              // Initial tokens
+})
+
+const throttleOpts = {
+    channel: 'google-places',
+    cost: 5,    // The token cost of each call
+    ttl: 5000   // Throw if we'll have to wait more than 5s.
 }
 
-let channel = new Channel({
-    interval: 1000,
-    bucketSize: 25,
-    tokensPerInterval: 10,
-    tokens: 25
-});
-Channels.add(channel);
+class API {
+    @throttle(throttleOpts)
+    static async requestToPlaces() {
+        return 'OK'
+    }
+
+    @throttle({...throttleOpts, cost: 8})
+    static async requestToPlacesRich() {
+        return 'OK!'
+    }
+}
 ```
+
+## Future Work
++ **'priority' option** - not exactly trivial in the current implementation.

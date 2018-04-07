@@ -21,7 +21,7 @@ describe('Decorator: throttle', function () {
 
     it('should attach to async function', function () {
         let channelId = 'testChannel';
-        let channel = Channels.createSimple(channelId, 1, 'second');
+        let channel = Channels.create(channelId, 1, 'second');
 
         let mock = spy(channel, 'enqueueTask');
         class A {
@@ -36,7 +36,7 @@ describe('Decorator: throttle', function () {
 
     it('should attach to Promise', function () {
         let channelId = 'testChannel';
-        let channel = Channels.createSimple(channelId, 1, 'second');
+        let channel = Channels.create(channelId, 1, 'second');
 
         let mock = spy(channel, 'enqueueTask');
         class A {
@@ -81,6 +81,6 @@ describe('Decorator: throttle', function () {
     });
 
     it('should respect ttl', function () {
-        
+
     });
 });

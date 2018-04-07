@@ -7,5 +7,5 @@ export interface ThrottleOptions {
 export const DEFAULT_THROTTLE_OPTIONS: ThrottleOptions = {
     channel: '',
     cost: 1,
-    ttl: 0
+    ttl: 0,
 };

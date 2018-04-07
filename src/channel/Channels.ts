@@ -4,14 +4,14 @@ import { TokenBucketOptions } from '../token-bucket/TokenBucketOptions';
 export namespace Channels {
     export const channels: Map<string, Channel> = new Map();
 
-    export function create(id: string, bucketOptions: TokenBucketOptions): Channel {
+    export function add(id: string, bucketOptions: TokenBucketOptions): Channel {
         let channel = new Channel(bucketOptions);
         channels.set(id, channel);
 
         return channel;
     }
 
-    export function createSimple(id: string, requests: number, interval: number | string): Channel {
+    export function create(id: string, requests: number, interval: number | string): Channel {
         let intervalValue: number;
         if (typeof interval === 'string') {
             if (interval === 'second') {
@@ -23,7 +23,7 @@ export namespace Channels {
             } else if (interval === 'day') {
                 intervalValue = 86400000;
             } else {
-                throw new Error('unknow interval literal.');
+                throw new Error('unknown interval literal.');
             }
         } else {
             intervalValue = interval;
@@ -36,6 +36,6 @@ export namespace Channels {
             tokens: requests
         };
 
-        return create(id, bucketOptions);
+        return add(id, bucketOptions);
     }
 }

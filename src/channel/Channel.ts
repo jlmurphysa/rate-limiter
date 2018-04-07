@@ -29,12 +29,16 @@ export class Channel {
         if (missingTokens > 0) {
             let delay = missingTokens / this._bucket.timePerToken;
 
-            if ((task.options.ttl > 0)
-                && (delay > task.options.ttl)) {
-                throw new Error('throwing ttl too low ' + delay);
+            if (task.options.ttl < 0) {
+                throw new Error('TTL cannot be negative');
             }
 
-            console.log('we have to wait ' + delay);
+            if ((task.options.ttl > 0)
+                && (delay > task.options.ttl)) {
+                throw new Error(`ttl too low to wait (${delay}ms)`);
+            }
+
+            console.log(`Throttled (waiting ${delay}ms)`);
             await new Promise((resolve) => {
                 let timer = setTimeout(resolve, delay);
                 this.tasks.set(task, timer);
