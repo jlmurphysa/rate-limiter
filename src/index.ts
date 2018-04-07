@@ -1,4 +1,4 @@
 import 'reflect-metadata';
 
 export * from './channel/Channel';
-export * from './decorator/throttle';
+export { throttle } from './decorator/throttle';
