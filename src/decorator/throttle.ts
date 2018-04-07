@@ -34,3 +34,5 @@ export function throttle(options: ThrottleOptions | string) {
         return descriptor;
     };
 }
+
+exports.throttle = throttle;
