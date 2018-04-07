@@ -1,6 +1,6 @@
 {
   "name": "@jlmurphysa/rate-limiter",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "build/src/index.js",
   "typings": "build/src/index.d.ts",
   "scripts": {
